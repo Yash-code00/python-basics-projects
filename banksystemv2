@@ -1,0 +1,64 @@
+from abc import ABC , abstractmethod
+
+class base(ABC):
+    def __init__(self,acc_number,acc_holder,acc_type,acc_balance):
+        self._accnum = acc_number
+        self.acctype = acc_type
+        self._acchol = acc_holder
+        self._accbal = acc_balance
+    @abstractmethod
+    def interest(self):
+        pass
+    def get_info(self):
+        return f"the accoun number: {self.accnum} balance: {self._accbal} holdername: {self.acchol} acctype: {self.acctype}"
+
+class base1(base):
+    def __init__(self, _acc_number, _acc_holder, acc_type, _acc_balance):
+        super().__init__(_acc_number, _acc_holder, acc_type, _acc_balance)
+    
+    def interest(self):
+        if self.acctype == "saving":
+            return f"this is the interest for your balance: {int((7/100)*self._accbal)}" 
+        elif self.acctype == "current":
+            return f"Current account does not get interest"
+        elif self.acctype == "fixeddeposit":
+            return f"the fd account will mature after 1 year at {int((8/100)*self._accbal)}$ per year" 
+        else :
+            return f"we only have saving or current or fd acc sorry"
+    
+    def deposit(self):
+        deposit=int(input(f"enter the amount you want to enter (your current balance is: {self._accbal})"))
+        if deposit >0 :
+            self._accbal += deposit
+        return f"the total after deposit is: {self._accbal}"
+    def fixeddeposit(self):
+        intput1 =int(input("enter your account number: "))
+        if intput1 == self.accnum and self.acctype == "fixeddeposit":
+            return f"your account will be mature after 1 year at {int((8/100)*self._accbal)}$ per year"
+        else:
+            return False
+    def withdrawl(self):
+            with1=int(input("enter the amount you want to withdrawl:"))
+            if self._accbal == 0:
+                return f"you have no balance in your account"
+            elif self.acctype == "fixeddepsit" or "current":
+                return f" you can't withdrwal from this type of account"
+            elif with1 > self._accbal:
+                return f"insufficent balance"
+            elif with1 <= self._accbal:
+                with1 -= self._accbal
+                return f"your balance after withdrawl = {-with1}"
+            else:
+                return "invalid input"
+        
+        
+
+    
+
+        
+
+    
+m1=base1(123,"yash","saving",200) 
+print(m1.interest()) 
+print(m1.withdrawl())
+print(m1.deposit())
